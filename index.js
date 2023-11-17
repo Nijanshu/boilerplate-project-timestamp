@@ -28,10 +28,11 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/:date", function (req, res) {
   let reqq=req.params.date
   let arr=reqq.split('-')
-  let dat=new Date(arr[0],arr[1],arr[2]).toString()
+  let dat=new Date(arr[0],arr[1],arr[2]).toUTCString()
   res.json({
     unix:Date.parse(reqq),
-    utc:dat.split('+')[0]
+    utc:dat,
+    edwe:arr[0]
   });
 });
 
