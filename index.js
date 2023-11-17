@@ -28,7 +28,7 @@ app.get("/api/hello", function (req, res) {
 app.get("/api", function (req, res) {
    let dat = new Date()
    let datt=dat.toUTCString();
-   unx = dat.getTime();
+   unx = new Date().getTime();
    res.json({
     unix: unx,
     utc: datt
@@ -51,7 +51,7 @@ app.get("/api/:date", function (req, res) {
 
     // Use Date.UTC to create a date object in UTC
     dat = new Date(Date.UTC(year, month, day, 0, 0, 0)).toUTCString();
-    unx = dat.getTime();
+    unx = new Date(Date.UTC(year, month, day, 0, 0, 0)).getTime();
   }
 
   if (isNaN(unx)) {
