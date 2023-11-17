@@ -34,6 +34,7 @@ app.get("/api", function (req, res) {
     utc: datt
   });
 })
+
 app.get("/api/:date", function (req, res) {
   let reqq = req.params.date;
   let dat;
@@ -50,7 +51,7 @@ app.get("/api/:date", function (req, res) {
 
     // Use Date.UTC to create a date object in UTC
     dat = new Date(Date.UTC(year, month, day, 0, 0, 0)).toUTCString();
-    unx = Date.parse(reqq);
+    unx = dat.getTime();
   }
 
   if (isNaN(unx)) {
