@@ -27,41 +27,23 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api", function (req, res) {
    let dat = new Date()
-   let datt=dat.toUTCString();
-   unx = new Date().getTime();
+   
    res.json({
-    unix: unx,
-    utc: datt
+    unix: dat.getTime(),
+    utc: dat.toUTCString()
   });
 })
 
 app.get("/api/:date", function (req, res) {
-  let reqq = req.params.date;
-  let dat;
-  let unx;
+  const paramsDate = req.params.date;
+    const invalidDate = "Invalid Date";
+    const date = parseInt(paramsDate) < 10000
+        ? new Date(paramsDate)
+        : new Date(parseInt(paramsDate))
 
-  if (!isNaN(reqq)) {
-    unx = Number(reqq);
-    dat = new Date(unx).toUTCString();
-  } else {
-    let arr = reqq.split('-');
-    let year = parseInt(arr[0]);
-    let month = parseInt(arr[1]) - 1; // Adjust for zero-indexed months
-    let day = parseInt(arr[2]);
-
-    // Use Date.UTC to create a date object in UTC
-    dat = new Date(Date.UTC(year, month, day, 0, 0, 0)).toUTCString();
-    unx = new Date(Date.UTC(year, month, day, 0, 0, 0)).getTime();
-  }
-
-  if (isNaN(unx)) {
-    res.status(400).json({ error: "Invalid Date" });
-  } else {
-    res.json({
-      unix: unx,
-      utc: dat
-    });
-  }
+    date.toString() === invalidDate
+        ? res.json({ error: invalidDate })
+        : res.json({ unix: date.valueOf(), utc: date.toUTCString() });
 });
 
 
