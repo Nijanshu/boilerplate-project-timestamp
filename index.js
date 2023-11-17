@@ -28,7 +28,7 @@ app.get("/api/hello", function (req, res) {
 app.get("/api", function (req, res) {
    let dat = new Date()
    let datt=dat.toUTCString();
-   unx = Date.parse(dat);
+   unx = dat.getTime();
    res.json({
     unix: unx,
     utc: datt
