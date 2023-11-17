@@ -26,14 +26,34 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date", function (req, res) {
-  let reqq=req.params.date
-  let arr=reqq.split('-')
-  let dat=new Date(arr[0],arr[1],arr[2]).toUTCString()
-  res.json({
-    unix:Date.parse(reqq),
-    utc:dat
+  let reqq = req.params.date;
+  let dat;
+  let unx;
+
+  if (!isNaN(reqq)) {
+    let ms = reqq * 1000;
+    dat = new Date(ms).toUTCString();
+    unx = Number(reqq);
+  } else {
+    let arr = reqq.split('-');
+    let year = parseInt(arr[0]);
+    let month = parseInt(arr[1]) - 1; // Adjust for zero-indexed months
+    let day = parseInt(arr[2]);
+
+    dat = new Date(year, month, day, 0, 0, 0).toUTCString();
+    unx = Date.parse(reqq);
+  }
+
+  if (isNaN(unx)) {
+    res.status(400).json({ error: "Invalid Date" });
+  } else {
+    res.json({
+      unix: unx,
+      utc: dat
     });
+  }
 });
+
 
 
 
