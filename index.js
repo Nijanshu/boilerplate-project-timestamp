@@ -31,16 +31,16 @@ app.get("/api/:date", function (req, res) {
   let unx;
 
   if (!isNaN(reqq)) {
-    let ms = reqq * 1000;
-    dat = new Date(ms).toUTCString();
     unx = Number(reqq);
+    dat = new Date(unx).toUTCString();
   } else {
     let arr = reqq.split('-');
     let year = parseInt(arr[0]);
     let month = parseInt(arr[1]) - 1; // Adjust for zero-indexed months
     let day = parseInt(arr[2]);
 
-    dat = new Date(year, month, day, 0, 0, 0).toUTCString();
+    // Use Date.UTC to create a date object in UTC
+    dat = new Date(Date.UTC(year, month, day, 0, 0, 0)).toUTCString();
     unx = Date.parse(reqq);
   }
 
