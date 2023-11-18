@@ -36,6 +36,7 @@ app.get("/api", function (req, res) {
 
 app.get("/api/:date", function (req, res) {
   const paramsDate = req.params.date;
+  console.log(parseInt(paramsDate))
     const invalidDate = "Invalid Date";
     const date = parseInt(paramsDate) < 10000
         ? new Date(paramsDate)
